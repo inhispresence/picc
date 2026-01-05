@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Region 1 Weekly Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7f9;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2, h3 { text-align: center; color: #2c3e50; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    button {
+      background: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 100%;
+    }
+    button:hover { background: #1f6391; }
+    #statusMessage { margin-top: 15px; font-weight: bold; text-align: center; color: #27ae60; }
+  </style>
+</head>
+<body>
+
+<h2>Central Region 1 Weekly Report</h2>
+
+<!-- Branch, Week Ending, Pastor -->
+<div class="section">
+  <div class="grid">
+    <div>
+      <label for="branch">Branch:</label>
+      <select id="branch">
+        <option value="">Select Branch</option>
+        <option value="Ntcheu">Ntcheu</option>
+        <option value="Salima">Salima</option>
+        <option value="Mtakataka">Mtakataka</option>
+        <option value="Bilira">Bilira</option>
+        <option value="Dedza">Dedza</option>
+        <option value="Njewa">Njewa</option>
+        <option value="Mitundu">Mitundu</option>
+        <option value="Mchezi">Mchezi</option>
+        <option value="Area 25">Area 25</option>
+        <option value="Hope Tabernacle">Hope Tabernacle</option>
+        <option value="Area 23">Area 23</option>
+        <option value="Old Town">Old Town</option>
+        <option value="Area 18">Area 18</option>
+      </select>
+    </div>
+    <div>
+      <label for="weekEnding">Week Ending:</label>
+      <input type="date" id="weekEnding">
+    </div>
+    <div>
+      <label for="pastorName">Pastor Name:</label>
+      <input type="text" id="pastorName" placeholder="Enter Pastor Name">
+    </div>
+  </div>
+</div>
+
+<!-- Thursday Section -->
+<div class="section">
+  <h3>Thursday Word Encounter</h3>
+  <div class="grid">
+    <div><label>Male:</label><input type="number" id="thuMale" value="0"></div>
+    <div><label>Female:</label><input type="number" id="thuFemale" value="0"></div>
+    <div><label>Heritage:</label><input type="number" id="thuHeritage" value="0"></div>
+    <div><label>First Timers:</label><input type="number" id="thuFirst" value="0"></div>
+    <div><label>New Converts:</label><input type="number" id="thuNew" value="0"></div>
+    <div><label>Total Attendance:</label><input type="number" id="thuAttendanceTotal" readonly></div>
+    <div><label>Free Will:</label><input type="number" id="thuFree" value="0"></div>
+    <div><label>Tithe:</label><input type="number" id="thuTithe" value="0"></div>
+    <div><label>Thanksgiving:</label><input type="number" id="thuThanks" value="0"></div>
+    <div><label>Total Offering:</label><input type="number" id="thuOfferingTotal" readonly></div>
+  </div>
+</div>
+
+<!-- Sunday Section -->
+<div class="section">
+  <h3>Sunday Service</h3>
+  <div class="grid">
+    <div><label>Male:</label><input type="number" id="sunMale" value="0"></div>
+    <div><label>Female:</label><input type="number" id="sunFemale" value="0"></div>
+    <div><label>Heritage:</label><input type="number" id="sunHeritage" value="0"></div>
+    <div><label>First Timers:</label><input type="number" id="sunFirst" value="0"></div>
+    <div><label>New Converts:</label><input type="number" id="sunNew" value="0"></div>
+    <div><label>Total Attendance:</label><input type="number" id="sunAttendanceTotal" readonly></div>
+    <div><label>Free Will:</label><input type="number" id="sunFree" value="0"></div>
+    <div><label>Tithe:</label><input type="number" id="sunTithe" value="0"></div>
+    <div><label>Thanksgiving:</label><input type="number" id="sunThanks" value="0"></div>
+    <div><label>Total Offering:</label><input type="number" id="sunOfferingTotal" readonly></div>
+  </div>
+</div>
+
+<button onclick="submitReport()">Submit Report</button>
+<div id="statusMessage"></div>
+
+<script>
+  // Helper to sum multiple fields
+  function sum(ids) {
+    return ids.reduce((total, id) => total + (parseInt(document.getElementById(id).value) || 0), 0);
+  }
+
+  // Auto-calculate totals on input
+  document.addEventListener("input", () => {
+    // Thursday attendance excludes new converts
+    document.getElementById("thuAttendanceTotal").value =
+      sum(["thuMale","thuFemale","thuHeritage","thuFirst"]);
+
+    // Thursday offerings
+    document.getElementById("thuOfferingTotal").value =
+      sum(["thuFree","thuTithe","thuThanks"]);
+
+    // Sunday attendance excludes new converts
+    document.getElementById("sunAttendanceTotal").value =
+      sum(["sunMale","sunFemale","sunHeritage","sunFirst"]);
+
+    // Sunday offerings
+    document.getElementById("sunOfferingTotal").value =
+      sum(["sunFree","sunTithe","sunThanks"]);
+  });
+
+  // Submit data to Google Apps Script
+  function submitReport() {
+    const status = document.getElementById("statusMessage");
+    status.innerText = "Submitting report...";
+
+    const url = "PASTE_YOUR_WEB_APP_EXEC_URL_HERE"; // <-- replace with your Web App URL
+
+    const data = {
+      branch: document.getElementById("branch").value,
+      weekEnding: document.getElementById("weekEnding").value,
+      pastorName: document.getElementById("pastorName").value,
+
+      thuMale: document.getElementById("thuMale").value,
+      thuFemale: document.getElementById("thuFemale").value,
+      thuHeritage: document.getElementById("thuHeritage").value,
+      thuFirst: document.getElementById("thuFirst").value,
+      thuNew: document.getElementById("thuNew").value,
+      thuAttendanceTotal: document.getElementById("thuAttendanceTotal").value,
+      thuFree: document.getElementById("thuFree").value,
+      thuTithe: document.getElementById("thuTithe").value,
+      thuThanks: document.getElementById("thuThanks").value,
+      thuOfferingTotal: document.getElementById("thuOfferingTotal").value,
+
+      sunMale: document.getElementById("sunMale").value,
+      sunFemale: document.getElementById("sunFemale").value,
+      sunHeritage: document.getElementById("sunHeritage").value,
+      sunFirst: document.getElementById("sunFirst").value,
+      sunNew: document.getElementById("sunNew").value,
+      sunAttendanceTotal: document.getElementById("sunAttendanceTotal").value,
+      sunFree: document.getElementById("sunFree").value,
+      sunTithe: document.getElementById("sunTithe").value,
+      sunThanks: document.getElementById("sunThanks").value,
+      sunOfferingTotal: document.getElementById("sunOfferingTotal").value
+    };
+
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(data)
+    });
+
+    status.innerText = "Report submitted successfully.";
+  }
+</script>
+
+</body>
+</html>

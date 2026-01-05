@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  background: #ffffff;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+h3 {
+  background: #2c3e50;
+  color: #ffffff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+h4 {
+  margin-top: 15px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+input[readonly] {
+  background: #eaeaea;
+  font-weight: bold;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #219150;
+}
+
+#statusMessage {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
